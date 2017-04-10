@@ -9,9 +9,6 @@ import java.util.Properties;
 public class v1Properties extends Properties {
 	
 	private static String sURI = "URI";
-	private static String sUser = "User";
-	private static String sPassword = "Password";
-	private static String sToken = "Token";
 	
 	public v1Properties() {
 		super();
@@ -35,15 +32,7 @@ public class v1Properties extends Properties {
 		return super.getProperty(sURI);
 	}
 	
-	public String getUser() {
-		return super.getProperty(sUser);
-	}
-	
-	public String getPassword() {
-		return super.getProperty(sPassword);
-	}
-	
-	public String getToken() {
-		return super.getProperty(sToken);
+	public String getToken(String sTokenID) {
+		return super.getProperty(sTokenID);
 	}
 }

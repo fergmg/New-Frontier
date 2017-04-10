@@ -1,8 +1,10 @@
-package v1.cycletime;
+package v1.extract;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,15 +42,15 @@ import com.versionone.apiclient.services.OrderBy.Order;
 
 import v1.util.v1Properties;
 
-public class IronWookieeStories extends JFrame {
+public class IronWookieeCycleTime extends JFrame {
 
-	public IronWookieeStories() throws V1Exception, MetaException, IOException {
+	public IronWookieeCycleTime() throws V1Exception, MetaException, IOException {
 		super("VersionOne for Tableau");
 
 		//Labels to provide feedback to user
 		JLabel pageLabel0 = new JLabel("Attempting to connect to VersionOne.");
 		JLabel pageLabelConnSuccess = new JLabel("Connected - Querying Database");
-		JLabel pageLabelSuccess = new JLabel("Done - VersionOneStories.xls file created.");
+		JLabel pageLabelSuccess = new JLabel("Done - IronWookieeStories.xls file created.");
 		JLabel pageLabelFail = new JLabel("Unknown failure.");
 		JLabel pageLabelFailAPI = new JLabel("Failure, unable to use VersionOne API.");
 		JLabel pageLabelFailConnect = new JLabel("Failure, unable to connect to VersionOne.");
@@ -65,7 +67,7 @@ public class IronWookieeStories extends JFrame {
 		setVisible(true);
 
 		//Connect to VersionOne - need to get token from properties and login
-		System.out.println("VersionOne Stories");
+		System.out.println("Iron Wookiee Cycle Time");
 		V1Connector token_connector = null;
 		v1Properties props = null;
 		
@@ -77,7 +79,7 @@ public class IronWookieeStories extends JFrame {
 		//Connect using connection class and token
 		token_connector = V1Connector.withInstanceUrl(props.getURI())
 				.withUserAgentHeader("Iron Wookiee Stories", "1.0")
-				.withAccessToken(props.getToken())
+				.withAccessToken(props.getToken("IronWookieeCycleTime"))
 				.build();
 
 		IServices services = new Services(token_connector);
@@ -238,7 +240,9 @@ public class IronWookieeStories extends JFrame {
 		String towrite;
 	    Calendar tempCal = Calendar.getInstance();
 	    Date day;
-
+	    SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+	    Date date;
+	    
 	    //Query for the definition of VersionOne Epic (Portfolio Items) attributes
 		IAssetType storyType = servit.getMeta().getAssetType("Story");
 		Query query = new Query(storyType, true);
@@ -265,6 +269,9 @@ public class IronWookieeStories extends JFrame {
 		GroupFilterTerm groupFilter = new AndFilterTerm(scopeTerm);
 		query.setFilter(groupFilter);
 
+//		Order by Number
+		query.getOrderBy().minorSort(numberAttribute, Order.Ascending);
+		
 		QueryResult result = servit.retrieve(query); //Query VersionOne for the data
 
 		//Setup Excel
@@ -297,11 +304,11 @@ public class IronWookieeStories extends JFrame {
 
 		for (Asset member : result.getAssets()) {
 			System.out.println(member.getAttribute(numberAttribute).getValue());
-
+			
 			// If first time with this ID, create row
 			Object id = member.getAttribute(numberAttribute).getValue();
 			if (id.toString().matches(oldid.toString())){
-				
+
 			}
 			else{
 				oldid = id;
@@ -322,30 +329,35 @@ public class IronWookieeStories extends JFrame {
 				cell = row.createCell(6);
 				cell.setCellStyle(cellStyleDate);
 			    cell = row.createCell(7);
-		    	cell.setCellFormula("IF(F"+(row_index+1)+",F"+(row_index+1)+"-D"+(row_index+1)+")");
+		    	cell.setCellFormula("IF(F"+(row_index+1)+",F"+(row_index+1)+"-D"+(row_index+1)+",\"\")");
 		    }
 
 			// Put date in proper status column
 			String status = ((String) member.getAttribute(statusnameAttribute).getValue());
-			if (status != null){
-				if (status.equals("Approved")){
-					if (cellApproved.getDateCellValue() == null)
-						cellApproved.setCellValue((Date) member.getAttribute(dateAttribute).getValue());
+			//Need to properly parse the date before doing anything with it. This double conversion seems to be the quickest
+			try {
+				date = dateFormatter.parse(dateFormatter.format((Date) member.getAttribute(dateAttribute).getValue()));
+				if (status != null){
+					if (status.equals("Approved")){
+						if (cellApproved.getDateCellValue() == null)
+							cellApproved.setCellValue(date);
+					}
+					if (status.equals("In Progress")){
+						if (cellInProgress.getDateCellValue() == null)
+							cellInProgress.setCellValue(date);
+					}
+					if (status.equals("Test")){
+						if (cellTest.getDateCellValue() == null)
+							cellTest.setCellValue(date);
+					}
+					if (status.equals("Done")){
+						if (cellDone.getDateCellValue() == null)
+							cellDone.setCellValue(date);
+					}
 				}
-				if (status.equals("In Progress")){
-					if (cellInProgress.getDateCellValue() == null)
-						cellInProgress.setCellValue((Date) member.getAttribute(dateAttribute).getValue());
-				}
-				if (status.equals("Test")){
-					if (cellTest.getDateCellValue() == null)
-						cellTest.setCellValue((Date) member.getAttribute(dateAttribute).getValue());
-				}
-				if (status.equals("Done")){
-					if (cellDone.getDateCellValue() == null)
-						cellDone.setCellValue((Date) member.getAttribute(dateAttribute).getValue());
-				}
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-		
 		}
 		
 		//Post process data
@@ -391,7 +403,7 @@ public class IronWookieeStories extends JFrame {
 	}
 	
 	public static void main(String[] args) throws MalformedURLException, V1Exception, MetaException, IOException {
-		IronWookieeStories userWindow = new IronWookieeStories();
+		IronWookieeCycleTime userWindow = new IronWookieeCycleTime();
 	}
 
 }

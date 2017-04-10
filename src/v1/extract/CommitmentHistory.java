@@ -38,6 +38,8 @@ import com.versionone.apiclient.interfaces.IServices;
 import com.versionone.apiclient.services.QueryResult;
 import com.versionone.apiclient.services.OrderBy.Order;
 
+import v1.util.v1Properties;
+
 public class CommitmentHistory  extends JFrame {
 	
 	public static void gethistory(IServices servit) throws APIException, MetaException, OidException, ConnectionException, IOException {
@@ -232,13 +234,19 @@ public class CommitmentHistory  extends JFrame {
 		setVisible(true);
 
 		System.out.println("Commitment Status");
-		V1Connector connector = V1Connector
-				.withInstanceUrl("https://www4.v1host.com/UNOS")
+		V1Connector token_connector = null;
+		v1Properties props = null;
+		
+		//Load V1 connection properties
+		props = new v1Properties("M:\\V1Properties");
+		
+		//Connect using connection class and token
+		token_connector = V1Connector.withInstanceUrl(props.getURI())
 				.withUserAgentHeader("Commitment Status", "1.0")
-				.withAccessToken("1.xcgbLoxPNY9z0L/kC+HvF441G1c=")
+				.withAccessToken(props.getToken("CommitmentHistory"))
 				.build();
 
-		IServices services = new Services(connector);
+		IServices services = new Services(token_connector);
 
 		int pass = 1;
 		try {

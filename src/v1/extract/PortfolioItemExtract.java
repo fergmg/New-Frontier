@@ -38,6 +38,8 @@ import com.versionone.apiclient.interfaces.IServices;
 import com.versionone.apiclient.services.QueryResult;
 import com.versionone.apiclient.services.OrderBy.Order;
 
+import v1.util.v1Properties;
+
 public class PortfolioItemExtract  extends JFrame {
 	
 	public static String cleanString(String towrite){ 
@@ -434,13 +436,19 @@ public class PortfolioItemExtract  extends JFrame {
 
 		//Connect to VersionOne
 		System.out.println("VersionOne for Tableau");
-		V1Connector connector = V1Connector
-				.withInstanceUrl("https://www4.v1host.com/UNOS")
+		V1Connector token_connector = null;
+		v1Properties props = null;
+		
+		//Load V1 connection properties
+		props = new v1Properties("M:\\V1Properties");
+		
+		//Connect using connection class and token
+		token_connector = V1Connector.withInstanceUrl(props.getURI())
 				.withUserAgentHeader("VersionOne for Tableau", "0.1")
-				.withAccessToken("1.u3t08pjxrfxqFiNJSF24JSeoWTA=")
+				.withAccessToken(props.getToken("PortfolioItemExtract"))
 				.build();
-
-		IServices services = new Services(connector);
+		
+		IServices services = new Services(token_connector);
 
 		//Determine if fail or pass and display results to user
 		int pass = 1;

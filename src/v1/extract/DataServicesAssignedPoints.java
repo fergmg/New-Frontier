@@ -23,6 +23,9 @@ import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;
 import com.versionone.apiclient.interfaces.IServices;
 import com.versionone.apiclient.services.QueryResult;
+
+import v1.util.v1Properties;
+
 import java.awt.event.*;
 
 
@@ -50,14 +53,21 @@ public class DataServicesAssignedPoints extends JFrame {
 		setSize(350, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		V1Connector connector = V1Connector
-				.withInstanceUrl("https://www4.v1host.com/UNOS")
+		
+		V1Connector token_connector = null;
+		v1Properties props = null;
+		
+		//Load V1 connection properties
+		props = new v1Properties("M:\\V1Properties");
+		
+		//Connect using connection class and token
+		token_connector = V1Connector.withInstanceUrl(props.getURI())
 				.withUserAgentHeader("DataServices", "1.0")
-				.withAccessToken("1.DXo8kY4P6M9tVFXMIuxT6JpU0eM=")
+				.withAccessToken(props.getToken("DataServicesAssignedPoints"))
 				.build();
-
+		
 		System.out.println("SecondVersion");
-		IServices services = new Services(connector);
+		IServices services = new Services(token_connector);
 		System.out.println("ThirdVersion");
 		dataServicesPlanning(services,sprint);
 

@@ -30,5 +30,6 @@
 	<classpathentry kind="lib" path="//mo3fp/mydocs$/fergusmi/VersionOne.JavaSDK-15.3.0/VersionOne.JavaSDK-15.3.0/dependencies/plexus-utils-3.0.15.jar"/>
 	<classpathentry kind="lib" path="//mo3fp/mydocs$/fergusmi/VersionOne.JavaSDK-15.3.0/VersionOne.JavaSDK-15.3.0/dependencies/VersionOne.SDK.Java.APIClient-15.3.0.jar"/>
 	<classpathentry kind="lib" path="//mo3fp/mydocs$/fergusmi/VersionOne.JavaSDK-15.3.0/VersionOne.JavaSDK-15.3.0/dependencies/wagon-provider-api-1.0-beta-2.jar"/>
+	<classpathentry kind="lib" path="//mo3fp/mydocs$/fergusmi/poi-3.15/poi-3.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

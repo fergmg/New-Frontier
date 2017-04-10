@@ -431,7 +431,7 @@ public class ntestapi  extends JFrame {
 		V1Connector connector = V1Connector
 			.withInstanceUrl(props.getURI())
 			.withUserAgentHeader("testAPI", "1.0")
-			.withAccessToken(props.getToken())
+			.withAccessToken(props.getToken("TestAPI"))
 			.build();
 
 		System.out.println("SecondVersion");
