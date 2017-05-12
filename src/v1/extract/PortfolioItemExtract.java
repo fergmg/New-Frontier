@@ -145,7 +145,15 @@ public class PortfolioItemExtract  extends JFrame {
 // To add a new data field - step 1 of 2
 //		IAttributeDefinition nameYourNewAttribute = epicType.getAttributeDefinition("Custom_ApprovedDate");
 //		query.getSelection().add(nameYourNewAttribute);
-
+		
+		IAttributeDefinition bodITEstimate = epicType.getAttributeDefinition("Custom_BODITEstimate.Name");
+		query.getSelection().add(bodITEstimate);
+		IAttributeDefinition bodITHoursEstimate = epicType.getAttributeDefinition("Custom_BODHourEstimate");
+		query.getSelection().add(bodITHoursEstimate);
+		IAttributeDefinition chargeCode = epicType.getAttributeDefinition("Custom_ChargeCode");
+		query.getSelection().add(chargeCode);
+		
+		
 		//Create a filter to limit the data pulled in the query (only Project Initiatives or Small Requests in folders IT and below)
 		FilterTerm scopeTerm = new FilterTerm(scopeAttribute);
 		scopeTerm.equal("Scope:2059"); // Filter project folder "IT" and below
@@ -399,7 +407,23 @@ public class PortfolioItemExtract  extends JFrame {
 //			topRow.createCell(column_index).setCellValue("NameTheColumnInExcel");	
 //			cell = row.createCell(column_index++);
 //			cell.setCellValue((String) member.getAttribute(nameYourNewAttribute).getValue());
+		    
+     		topRow.createCell(column_index).setCellValue("BOD IT Estimate");	
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(bodITEstimate).getValue());
+			
+			topRow.createCell(column_index).setCellValue("BOD IT Hours Estimate");	
+			cell = row.createCell(column_index++);
+			Double itHoursEstimate = (Double) member.getAttribute(bodITHoursEstimate).getValue();
+			if (itHoursEstimate != null)
+				cell.setCellValue(itHoursEstimate);
+			else
+				cell.setCellValue(0);
+			cell.setCellStyle(cellStyleNumber);
 
+			topRow.createCell(column_index).setCellValue("Charge Code");	
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(chargeCode).getValue());
 		}
 	
 // This section will resize the width of columns for easier human reading
@@ -448,6 +472,8 @@ public class PortfolioItemExtract  extends JFrame {
 				.withUserAgentHeader("VersionOne for Tableau", "0.1")
 				.withAccessToken(props.getToken("PortfolioItemExtract"))
 				.build();
+		
+		//1.ew88DA8d3ExmKr1cEuLbsyFsNRs=
 		
 		IServices services = new Services(token_connector);
 
