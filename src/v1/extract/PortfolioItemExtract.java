@@ -43,6 +43,7 @@ import v1.util.v1Properties;
 public class PortfolioItemExtract  extends JFrame {
 	
 	public static String cleanString(String towrite){ 
+		//Test
 		//Use to clear out formatting text in Title, Description
 		String tempstring;
 		tempstring = towrite.replaceAll("\\<.*?\\>", "");  //remove <***> formatting
