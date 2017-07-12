@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -18,7 +19,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.versionone.Oid;
+
 import com.versionone.apiclient.Asset;
 import com.versionone.apiclient.Query;
 import com.versionone.apiclient.Services;
@@ -31,7 +32,6 @@ import com.versionone.apiclient.exceptions.V1Exception;
 import com.versionone.apiclient.filters.AndFilterTerm;
 import com.versionone.apiclient.filters.FilterTerm;
 import com.versionone.apiclient.filters.GroupFilterTerm;
-import com.versionone.apiclient.filters.OrFilterTerm;
 import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;
 import com.versionone.apiclient.interfaces.IServices;
@@ -146,13 +146,34 @@ public class PortfolioItemExtract  extends JFrame {
 //		IAttributeDefinition nameYourNewAttribute = epicType.getAttributeDefinition("Custom_ApprovedDate");
 //		query.getSelection().add(nameYourNewAttribute);
 		
-		IAttributeDefinition bodITEstimate = epicType.getAttributeDefinition("Custom_BODITEstimate.Name");
-		query.getSelection().add(bodITEstimate);
-		IAttributeDefinition bodITHoursEstimate = epicType.getAttributeDefinition("Custom_BODHourEstimate");
-		query.getSelection().add(bodITHoursEstimate);
-		IAttributeDefinition chargeCode = epicType.getAttributeDefinition("Custom_ChargeCode");
-		query.getSelection().add(chargeCode);
-		
+		IAttributeDefinition bodITEstimateAttribute = epicType.getAttributeDefinition("Custom_BODITEstimate.Name");
+		query.getSelection().add(bodITEstimateAttribute);
+		IAttributeDefinition bodITHoursEstimateAttribute = epicType.getAttributeDefinition("Custom_BODHourEstimate");
+		query.getSelection().add(bodITHoursEstimateAttribute);
+		IAttributeDefinition chargeCodeAttribute = epicType.getAttributeDefinition("Custom_ChargeCode");
+		query.getSelection().add(chargeCodeAttribute);
+		IAttributeDefinition impactsDBAttribute = epicType.getAttributeDefinition("Custom_ImpactsDB.Name");
+		query.getSelection().add(impactsDBAttribute);
+		IAttributeDefinition impactsUIAttribute = epicType.getAttributeDefinition("Custom_ImpactsUI.Name");
+		query.getSelection().add(impactsUIAttribute);
+		IAttributeDefinition impactsOMBDataAttribute = epicType.getAttributeDefinition("Custom_ImpactsOMBDataCollection.Name");
+		query.getSelection().add(impactsOMBDataAttribute);
+		IAttributeDefinition impactsVendorsAttribute = epicType.getAttributeDefinition("Custom_ImpactsVendors.Name");
+		query.getSelection().add(impactsVendorsAttribute);
+		IAttributeDefinition pocITEstimateAttribute = epicType.getAttributeDefinition("Custom_POCITEstimate.Name");
+		query.getSelection().add(pocITEstimateAttribute);
+		IAttributeDefinition brdStatusAttribute = epicType.getAttributeDefinition("Custom_BRDStatus.Name");
+		query.getSelection().add(brdStatusAttribute);
+		IAttributeDefinition slaStartDateAttribute = epicType.getAttributeDefinition("Custom_SLAStartDate");
+		query.getSelection().add(slaStartDateAttribute);
+		IAttributeDefinition slaWaiverAttribute = epicType.getAttributeDefinition("Custom_SLAWaiver");
+		query.getSelection().add(slaWaiverAttribute);
+		IAttributeDefinition proposalIDAttribute = epicType.getAttributeDefinition("Custom_ProposalID");
+		query.getSelection().add(proposalIDAttribute);
+		IAttributeDefinition additionalEstimateAttribute = epicType.getAttributeDefinition("Custom_AdditionalEstimate");
+		query.getSelection().add(additionalEstimateAttribute);
+		IAttributeDefinition scrumMasterAttribute = epicType.getAttributeDefinition("Custom_ScrumMaster.Name");
+		query.getSelection().add(scrumMasterAttribute);
 		
 		//Create a filter to limit the data pulled in the query (only Project Initiatives or Small Requests in folders IT and below)
 		FilterTerm scopeTerm = new FilterTerm(scopeAttribute);
@@ -205,11 +226,13 @@ public class PortfolioItemExtract  extends JFrame {
 			column_index = 0;
 			Row row = sheet1.createRow(row_index);
 
+			//Display ID - numberAttribute
 			topRow.createCell(column_index).setCellValue("Display ID");	
 		    cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(numberAttribute).getValue());	
 			towrite = (String) member.getAttribute(nameAttribute).getValue();	
 
+			//Name - nameAttribute
 			topRow.createCell(column_index).setCellValue("Name");	
 		    cell = row.createCell(column_index++);
 			towrite = (String) member.getAttribute(nameAttribute).getValue();
@@ -217,7 +240,8 @@ public class PortfolioItemExtract  extends JFrame {
 			if (towrite != null) {
 				tempstring = cleanString(towrite);
 			}
-
+			
+			//Planned Begin - beginDateAttribute
 			topRow.createCell(column_index).setCellValue("Planned Begin");	
 			cell.setCellValue(tempstring);	
 		    cell = row.createCell(column_index++);
@@ -229,6 +253,7 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue("");	    	
 		    }
 
+		    //Planned End - endDateAttribute
 			topRow.createCell(column_index).setCellValue("Planned End");	
 		    cell = row.createCell(column_index++);
 		    day = (Date) member.getAttribute(endDateAttribute).getValue();
@@ -241,14 +266,17 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue("");	    	
 		    }
 
+		    //Commitment Accuracy - commitAttribute
 			topRow.createCell(column_index).setCellValue("Commitment Accuracy");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(commitAttribute).getValue());	
 
+			//Champion - championAttribute
 			topRow.createCell(column_index).setCellValue("Champion");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(championAttribute).getValue());	
 
+			//Team - teamAttribute
 			topRow.createCell(column_index).setCellValue("Team");	
 			cell = row.createCell(column_index++);
 			towrite = "";
@@ -260,22 +288,27 @@ public class PortfolioItemExtract  extends JFrame {
 		    }
 			cell.setCellValue(towrite);	
 
+			//Source - sourceAttribute
 			topRow.createCell(column_index).setCellValue("Source");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(sourceAttribute).getValue());	
 
+			//Status - statusAttribute
 			topRow.createCell(column_index).setCellValue("Status");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(statusAttribute).getValue());	
 
+			//StateActive - stateAttribute
 			topRow.createCell(column_index).setCellValue("StateActive");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue(!(boolean) member.getAttribute(stateAttribute).getValue());	// True is closed, so flip to True is open
 
+			//Type - typeAttribute
 			topRow.createCell(column_index).setCellValue("Type");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(typeAttribute).getValue());	
 
+			//Description - descriptionAttribute
 			topRow.createCell(column_index).setCellValue("Description");	
 			cell = row.createCell(column_index++);
 			towrite = (String) member.getAttribute(descriptionAttribute).getValue();
@@ -285,14 +318,17 @@ public class PortfolioItemExtract  extends JFrame {
 			}
 			cell.setCellValue(tempstring);	
 
+			//Reference - referenceAttribute
 			topRow.createCell(column_index).setCellValue("Reference");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(referenceAttribute).getValue());	
 
+			//Priority - priorityAttribute
 			topRow.createCell(column_index).setCellValue("Priority");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(priorityAttribute).getValue());	
 
+			//Create Date - createDateAttribute
 			topRow.createCell(column_index).setCellValue("Create Date");	
 			cell = row.createCell(column_index++);
 		    day = (Date) member.getAttribute(createDateAttribute).getValue();
@@ -303,17 +339,20 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue("");	    	
 		    }
 
+		    //Order - rankAttribute
 			topRow.createCell(column_index).setCellValue("Order");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue(Long.parseLong((String) member.getAttribute(rankAttribute).getValue()));
 			cell.setCellStyle(cellStyleNumber);
 
+			//ID - getToken()
 			topRow.createCell(column_index).setCellValue("ID");	
 			cell = row.createCell(column_index++);
 			towrite = member.getOid().getToken();
 			tempstring = towrite.replaceAll("Epic:", "");  //remove Epic:
 			cell.setCellValue(tempstring);
 
+			//Swag - swagAttribute
 			topRow.createCell(column_index).setCellValue("Swag");	
 			cell = row.createCell(column_index++);
 			Double swag = 0.0; 
@@ -324,6 +363,7 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue(0);
 			cell.setCellStyle(cellStyleNumber);
 
+			//Points - pointsAttribute
 			topRow.createCell(column_index).setCellValue("Points");	
 			cell = row.createCell(column_index++);
 			Double points = 0.0; 
@@ -334,10 +374,12 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue(0);
 			cell.setCellStyle(cellStyleNumber);
 
+			//BOD - bodAttribute
 			topRow.createCell(column_index).setCellValue("BOD");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(bodAttribute).getValue());	
 
+			//Owner - ownerAttribute
 			topRow.createCell(column_index).setCellValue("Owner");	
 			cell = row.createCell(column_index++);
 			towrite = "";
@@ -349,6 +391,7 @@ public class PortfolioItemExtract  extends JFrame {
 		    }
 			cell.setCellValue(towrite);	
 
+			//Product - productAttribute
 			topRow.createCell(column_index).setCellValue("Product");	
 			cell = row.createCell(column_index++);
 			towrite = "";
@@ -360,10 +403,12 @@ public class PortfolioItemExtract  extends JFrame {
 		    }
 			cell.setCellValue(towrite);	
 
+			//Committee - committeeAttribute
 			topRow.createCell(column_index).setCellValue("Committee");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(committeeAttribute).getValue());	
 
+			//Theme - themeAttribute
 			topRow.createCell(column_index).setCellValue("Theme");	
 			cell = row.createCell(column_index++);
 			towrite = "";
@@ -375,14 +420,17 @@ public class PortfolioItemExtract  extends JFrame {
 		    }
 			cell.setCellValue(towrite);	
 
+			//Program - programAttribute
 			topRow.createCell(column_index).setCellValue("Program");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(programAttribute).getValue());	
 
+			//Folder - scopeSimpleAttribute
 			topRow.createCell(column_index).setCellValue("Folder");	
 			cell = row.createCell(column_index++);
 			cell.setCellValue((String) member.getAttribute(scopeSimpleAttribute).getValue());
 
+			//Closed Date - closedAttribute
 			topRow.createCell(column_index).setCellValue("Closed Date");	
 			cell = row.createCell(column_index++);
 		    day = (Date) member.getAttribute(closedAttribute).getValue();
@@ -393,6 +441,7 @@ public class PortfolioItemExtract  extends JFrame {
 				cell.setCellValue("");	    	
 		    }
 
+		    //Approved Date - approvedDateAttribute
 			topRow.createCell(column_index).setCellValue("Approved Date");	
 			cell = row.createCell(column_index++);
 		    day = (Date) member.getAttribute(approvedDateAttribute).getValue();
@@ -410,11 +459,11 @@ public class PortfolioItemExtract  extends JFrame {
 		    
      		topRow.createCell(column_index).setCellValue("BOD IT Estimate");	
 			cell = row.createCell(column_index++);
-			cell.setCellValue((String) member.getAttribute(bodITEstimate).getValue());
+			cell.setCellValue((String) member.getAttribute(bodITEstimateAttribute).getValue());
 			
 			topRow.createCell(column_index).setCellValue("BOD IT Hours Estimate");	
 			cell = row.createCell(column_index++);
-			Double itHoursEstimate = (Double) member.getAttribute(bodITHoursEstimate).getValue();
+			Double itHoursEstimate = (Double) member.getAttribute(bodITHoursEstimateAttribute).getValue();
 			if (itHoursEstimate != null)
 				cell.setCellValue(itHoursEstimate);
 			else
@@ -423,7 +472,82 @@ public class PortfolioItemExtract  extends JFrame {
 
 			topRow.createCell(column_index).setCellValue("Charge Code");	
 			cell = row.createCell(column_index++);
-			cell.setCellValue((String) member.getAttribute(chargeCode).getValue());
+			cell.setCellValue((String) member.getAttribute(chargeCodeAttribute).getValue());
+			
+			
+			//New
+			topRow.createCell(column_index).setCellValue("Impacts DB");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(impactsDBAttribute).getValue());
+			
+			topRow.createCell(column_index).setCellValue("Impacts UI");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(impactsUIAttribute).getValue());
+			
+			topRow.createCell(column_index).setCellValue("Impacts OMB Data Collection");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(impactsOMBDataAttribute).getValue());
+			
+			topRow.createCell(column_index).setCellValue("Impacts Vendors");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(impactsVendorsAttribute).getValue());
+			
+			
+		    //SLA Start Date - slaStartDateAttribute
+			topRow.createCell(column_index).setCellValue("SLA Start Date");	
+			cell = row.createCell(column_index++);
+		    day = (Date) member.getAttribute(slaStartDateAttribute).getValue();
+		    if (day != null) {
+				cell.setCellValue(day);
+				cell.setCellStyle(cellStyleDate);
+		    } else {
+				cell.setCellValue("");	    	
+		    }
+		    
+		    //SLA Waiver - slaWaiverAttribute
+			topRow.createCell(column_index).setCellValue("SLA Waiver");
+			cell = row.createCell(column_index++);
+			Object waiverObject = member.getAttribute(slaWaiverAttribute).getValue();
+			if (waiverObject == null) {
+				cell.setCellValue("False");
+			}
+			else{
+				cell.setCellValue("True");
+			}
+			
+			//Additional Estimate - addtionalEstimateAttribute
+			topRow.createCell(column_index).setCellValue("Additional Estimate");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(additionalEstimateAttribute).getValue());
+			
+			//Proposal ID - proposalIDAttribute
+			topRow.createCell(column_index).setCellValue("Proposal ID");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(proposalIDAttribute).getValue());
+
+			
+			//Scrum Master - scrumMasterAttribute
+			topRow.createCell(column_index).setCellValue("Scrum Master");	
+			cell = row.createCell(column_index++);
+			towrite = "";
+		    for (Object value : member.getAttribute(scrumMasterAttribute).getValues()) {
+				towrite = towrite + (String) value + ", ";
+		    }
+		    if (towrite.length() > 0){
+		    	towrite = towrite.substring(0, towrite.length()-2);
+		    }
+			cell.setCellValue(towrite);	
+			
+			//BRD Status - brdStatusAttribute
+			topRow.createCell(column_index).setCellValue("BRD Status");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(brdStatusAttribute).getValue());
+			
+			//POC IT Estimate - pocITEstimateAttribute
+			topRow.createCell(column_index).setCellValue("POC IT Estimate");
+			cell = row.createCell(column_index++);
+			cell.setCellValue((String) member.getAttribute(pocITEstimateAttribute).getValue());
+
 		}
 	
 // This section will resize the width of columns for easier human reading
