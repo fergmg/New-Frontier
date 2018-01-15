@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.w3c.dom.Attr;
 
+import com.sun.scenario.animation.SplineInterpolator;
 import com.versionone.apiclient.Query;
 import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;
@@ -20,7 +21,6 @@ public class StoryType {
 	public IAttributeDefinition CategoryNameAttribute;
 	public IAttributeDefinition EstimateAttribute;
 	public IAttributeDefinition OriginalEstimateAttribute;
-	public IAttributeDefinition ParentNameAttribute;
 	public IAttributeDefinition ReferenceAttribute;
 	public IAttributeDefinition SourceNameAttribute;
 	public IAttributeDefinition StatusNameAttribute;
@@ -29,8 +29,10 @@ public class StoryType {
 	public IAttributeDefinition TeamNameAttribute;
 	public IAttributeDefinition TimeboxNameAttribute;
 	public IAttributeDefinition CustomerNameAttribute; //I think this is Product Owner
-	
-	
+	public IAttributeDefinition SplitFromNumberAttribute;
+	public IAttributeDefinition SplitToNumberAttribute;
+	public IAttributeDefinition IsDeletedAttribute;
+	public IAttributeDefinition SuperAndUpNumbersAttribute;
 	
 	public List<IAttributeDefinition> Attributes;
 	
@@ -66,7 +68,7 @@ public class StoryType {
 		IsClosedAttribute = createAttribute("IsClosed");
 		Attributes.add(IsClosedAttribute);
 		
-		SuperNameAttribute = createAttribute("Super.Name");
+		SuperNameAttribute = createAttribute("Super.Number");
 		Attributes.add(SuperNameAttribute);
 		
 		TeamNameAttribute = createAttribute("Team.Name");
@@ -81,14 +83,23 @@ public class StoryType {
 		StatusNameAttribute = createAttribute("Status.Name");
 		Attributes.add(StatusNameAttribute);
 		
-		ParentNameAttribute = createAttribute("Parent.Name");
-		Attributes.add(ParentNameAttribute);
-		
 		TimeboxNameAttribute = createAttribute("Timebox.Name");
 		Attributes.add(TimeboxNameAttribute);
 		
 		CustomerNameAttribute = createAttribute("Customer.Name");
 		Attributes.add(CustomerNameAttribute);
+		
+		SplitFromNumberAttribute = createAttribute("SplitFrom.Number");
+		Attributes.add(SplitFromNumberAttribute);
+		
+		SplitToNumberAttribute = createAttribute("SplitTo.Number");
+		Attributes.add(SplitToNumberAttribute);
+		
+		IsDeletedAttribute = createAttribute("IsDeleted");
+		Attributes.add(IsDeletedAttribute);
+		
+		SuperAndUpNumbersAttribute = createAttribute("SuperAndUp.Number");
+		Attributes.add(SuperAndUpNumbersAttribute);
 
 	}
 	

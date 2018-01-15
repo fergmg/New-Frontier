@@ -63,7 +63,7 @@ public class StoryExtract extends JFrame {
 		setVisible(true);
 
 
-		System.out.println("VersionOne for Tableau");
+		System.out.println("VersionOne Stories for Tableau");
 
 		//Connect to VersionOne
 		System.out.println("Connecting to VersionOne...");
@@ -136,7 +136,6 @@ public class StoryExtract extends JFrame {
 
 		QueryResult result = servit.retrieve(query); //Query VersionOne for the data
 
-
 		//Setup Excel
 		Workbook workbook = new HSSFWorkbook();
 		Sheet sheet1 = workbook.createSheet("Portfolio Items");
@@ -144,26 +143,11 @@ public class StoryExtract extends JFrame {
 		CellStyle cellStyleNumber = workbook.createCellStyle();
 		cellStyleDate.setDataFormat((short) 0xe); // "m/d/yy" from http://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html
 		cellStyleNumber.setDataFormat((short) 1); // "0" from http://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html
-
 		Row topRow = sheet1.createRow(row_index);
-		/*		for (IAttributeDefinition attrDef : storyAsset.Attributes) {
-
-			if(attrDef != null) {
-			row_index = row_index + 1;
-			column_index = 0;
-			Row row = sheet1.createRow(row_index);
-
-			topRow.createCell(column_index).setCellValue("Attribute Name");
-			cell = row.createCell(column_index++);
-			cell.setCellValue(attrDef.getName());
-
-			topRow.createCell(column_index).setCellValue("Attribute Type");
-			cell = row.createCell(column_index++);
-			cell.setCellValue(attrDef.getAttributeType().toString());
-			}
-		}*/
+		
 		String attributeType;
 		Integer valuesLength;
+		
 		for (Asset member : result.getAssets()) {
 
 			row_index = row_index + 1;
@@ -177,11 +161,10 @@ public class StoryExtract extends JFrame {
 				topRow.createCell(column_index).setCellValue(attribute.getName());
 				cell = row.createCell(column_index++);
 				
-				
 				if(member.getAttribute(attribute).getValues()!=null)
 				{
 					valuesLength = member.getAttribute(attribute).getValues().length;
-
+					if(valuesLength > 0) {
 					switch(attributeType) {
 					
 					case "Text": 
@@ -218,6 +201,7 @@ public class StoryExtract extends JFrame {
 						break;
 						
 					default: break;
+					}
 					}
 				}
 			}
