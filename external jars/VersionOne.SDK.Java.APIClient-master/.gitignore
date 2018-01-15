@@ -1,0 +1,35 @@
+## Java Compiled/Package Files##
+*.class
+*.jar
+*.war
+*.ear
+
+## Eclipse Files ##
+.metadata/
+.settings/
+.externalToolBuilders/
+bin/
+*.launch
+local.properties
+
+## InteliJ IDEA Files ##
+.idea/
+VersionOne.SDK.Java.APIClient.iml
+
+## Maven Files ##
+target/
+
+## Temp Files##
+tmp/
+*.bak
+*.tmp
+*.swp
+~$*
+[Tt]humbs.db
+*.DS_Store
+pom.xml.asc
+
+## Subversion files ##
+.svn
+
+.eclipse-pmd
