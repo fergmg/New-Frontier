@@ -518,7 +518,10 @@ public class PortfolioItemExtract  extends JFrame {
 			//Additional Estimate - addtionalEstimateAttribute
 			topRow.createCell(column_index).setCellValue("Additional Estimate");
 			cell = row.createCell(column_index++);
-			cell.setCellValue((String) member.getAttribute(additionalEstimateAttribute).getValue());
+			if(member.getAttribute(additionalEstimateAttribute).getValue() != null)
+			{
+				cell.setCellValue((String) member.getAttribute(additionalEstimateAttribute).getValue().toString());
+			}
 			
 			//Proposal ID - proposalIDAttribute
 			topRow.createCell(column_index).setCellValue("Proposal ID");
@@ -589,8 +592,8 @@ public class PortfolioItemExtract  extends JFrame {
 		v1Properties props = null;
 		
 		//Load V1 connection properties
-		props = new v1Properties("M:\\V1Properties");
-		
+		//props = new v1Properties("M:\\V1Properties");
+		props = new v1Properties("\\\\mo3fp\\mydocs$\\boardllo\\V1Properties");
 		//Connect using connection class and token
 		token_connector = V1Connector.withInstanceUrl(props.getURI())
 				.withUserAgentHeader("VersionOne for Tableau", "0.1")
