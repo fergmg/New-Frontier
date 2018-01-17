@@ -30,15 +30,14 @@ import com.versionone.apiclient.exceptions.V1Exception;
 import com.versionone.apiclient.filters.AndFilterTerm;
 import com.versionone.apiclient.filters.FilterTerm;
 import com.versionone.apiclient.filters.GroupFilterTerm;
-import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;
 import com.versionone.apiclient.interfaces.IServices;
 import com.versionone.apiclient.services.QueryResult;
-import com.versionone.apiclient.services.OrderBy.Order;
 
 import v1.util.StoryType;
 import v1.util.v1Properties;
 
+@SuppressWarnings("serial")
 public class StoryExtract extends JFrame {
 
 	public StoryExtract() throws V1Exception, MetaException, IOException {
@@ -111,8 +110,8 @@ public class StoryExtract extends JFrame {
 		Cell cell;
 		Integer row_index = 0;
 		Integer column_index = 0;
-		String towrite;
-		Calendar tempCal = Calendar.getInstance();
+//		String towrite;
+//		Calendar tempCal = Calendar.getInstance();
 		Date day;
 
 		StoryType storyAsset = new StoryType(servit);
@@ -245,6 +244,7 @@ public class StoryExtract extends JFrame {
 	}
 
 	public static void main(String[] args) throws MalformedURLException, V1Exception, MetaException, IOException {
+		@SuppressWarnings("unused")
 		StoryExtract userWindow = new StoryExtract();
 
 	}

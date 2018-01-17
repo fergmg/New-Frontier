@@ -1,11 +1,6 @@
 package v1.util;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import org.w3c.dom.Attr;
-
-import com.sun.scenario.animation.SplineInterpolator;
 import com.versionone.apiclient.Query;
 import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;

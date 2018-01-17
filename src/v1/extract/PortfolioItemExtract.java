@@ -40,37 +40,10 @@ import com.versionone.apiclient.services.OrderBy.Order;
 
 import v1.util.v1Properties;
 
+@SuppressWarnings("serial")
 public class PortfolioItemExtract  extends JFrame {
 	
-	public static String cleanString(String towrite){ 
-		//Test
-		//Use to clear out formatting text in Title, Description
-		String tempstring;
-		tempstring = towrite.replaceAll("\\<.*?\\>", "");  //remove <***> formatting
-		towrite = tempstring.replace("Â","");
-		tempstring = towrite.replace("&nbsp;","");				
-		towrite = tempstring.replace("&ndash;","-");
-		tempstring = towrite.replace("&ldquo;","\"");				
-		towrite = tempstring.replace("&rdquo;","\"");
-		tempstring = towrite.replace("&gt;",">");				
-		towrite = tempstring.replace("&lt;","<");
-		tempstring = towrite.replace("&rsquo;","\'");				
-		towrite = tempstring.replace("â€“","–");
-		tempstring = towrite.replace("&amp;","&");				
-		towrite = tempstring.replace("websitehttp","http");
-		tempstring = towrite.replace("â€¢","•");				
-		towrite = tempstring.replace("â€‹","");
-		tempstring = towrite.replace("â€™","’");				
-		towrite = tempstring.replace("â€¦","…");
-		tempstring = towrite.replace("&hellip;","…");				
-		towrite = tempstring.replace("&middot;","·");
-		tempstring = towrite.replace("&mdash;","-");				
-		towrite = tempstring.replace("&bull;","\n•");
-		tempstring = towrite.replace("ï‚§","\n•");				
-		towrite = tempstring.replace("ïƒ˜","\n•");
-		tempstring = towrite;				
-		return tempstring;
-	}
+	
 	
 	public static void gethistory(IServices servit) throws APIException, MetaException, OidException, ConnectionException, IOException {
 		// Return history of an asset
@@ -634,6 +607,7 @@ public class PortfolioItemExtract  extends JFrame {
 	}
 
 	public static void main(String[] args) throws MalformedURLException, V1Exception, MetaException, IOException {
+		@SuppressWarnings("unused")
 		PortfolioItemExtract userWindow = new PortfolioItemExtract();
 	}
 

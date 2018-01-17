@@ -20,7 +20,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.versionone.Oid;
 import com.versionone.apiclient.Asset;
 import com.versionone.apiclient.Query;
 import com.versionone.apiclient.Services;
@@ -33,7 +32,6 @@ import com.versionone.apiclient.exceptions.V1Exception;
 import com.versionone.apiclient.filters.AndFilterTerm;
 import com.versionone.apiclient.filters.FilterTerm;
 import com.versionone.apiclient.filters.GroupFilterTerm;
-import com.versionone.apiclient.filters.OrFilterTerm;
 import com.versionone.apiclient.interfaces.IAssetType;
 import com.versionone.apiclient.interfaces.IAttributeDefinition;
 import com.versionone.apiclient.interfaces.IServices;
@@ -42,6 +40,7 @@ import com.versionone.apiclient.services.OrderBy.Order;
 
 import v1.util.v1Properties;
 
+@SuppressWarnings("serial")
 public class IronWookieeCycleTime extends JFrame {
 
 	public IronWookieeCycleTime() throws V1Exception, MetaException, IOException {

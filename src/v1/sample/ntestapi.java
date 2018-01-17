@@ -3,7 +3,6 @@ package v1.sample;
 import java.net.MalformedURLException;
 import java.io.FileOutputStream;
 import javax.swing.JFrame;
-import java.io.*;
 
 import com.versionone.Oid;
 import com.versionone.apiclient.*;
@@ -32,8 +31,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
+@SuppressWarnings("serial")
 public class ntestapi  extends JFrame {
 	
 	static String OPENBRACKET = "{";
@@ -205,6 +204,7 @@ public class ntestapi  extends JFrame {
 			FileOutputStream output = new FileOutputStream("Test1.xls");
 			workbook.write(output);
 			output.close();
+			workbook.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 			}
@@ -404,6 +404,7 @@ public class ntestapi  extends JFrame {
 			FileOutputStream output = new FileOutputStream("Test1.xls");
 			workbook.write(output);
 			output.close();
+			workbook.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

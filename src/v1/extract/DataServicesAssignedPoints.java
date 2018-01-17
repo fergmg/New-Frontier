@@ -5,7 +5,6 @@ package v1.extract;
 import java.net.MalformedURLException;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,9 +25,8 @@ import com.versionone.apiclient.services.QueryResult;
 
 import v1.util.v1Properties;
 
-import java.awt.event.*;
 
-
+@SuppressWarnings("serial")
 public class DataServicesAssignedPoints extends JFrame {
 	
 	static String OPENBRACKET = "{";
@@ -173,6 +171,7 @@ public class DataServicesAssignedPoints extends JFrame {
 		}
 	}
 	 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws MalformedURLException, V1Exception{
 		System.out.println("FirstVersion");
 
