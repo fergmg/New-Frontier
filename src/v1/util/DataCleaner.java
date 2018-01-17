@@ -2,6 +2,10 @@ package v1.util;
 
 public class DataCleaner {
 
+	public DataCleaner() {
+		
+	}
+	
 	public String cleanString(String data){ 
 		//Test
 		//Use to clear out formatting text in Title, Description

@@ -38,12 +38,11 @@ import com.versionone.apiclient.interfaces.IServices;
 import com.versionone.apiclient.services.QueryResult;
 import com.versionone.apiclient.services.OrderBy.Order;
 
+import v1.util.DataCleaner;
 import v1.util.v1Properties;
 
 @SuppressWarnings("serial")
 public class PortfolioItemExtract  extends JFrame {
-	
-	
 	
 	public static void gethistory(IServices servit) throws APIException, MetaException, OidException, ConnectionException, IOException {
 		// Return history of an asset
@@ -53,6 +52,8 @@ public class PortfolioItemExtract  extends JFrame {
 		String towrite;
 	    Calendar tempCal = Calendar.getInstance();
 	    Date day;
+	    
+	    DataCleaner cleaner = new DataCleaner();
 
 	    //Query for the definition of VersionOne Epic (Portfolio Items) attributes
 		IAssetType epicType = servit.getMeta().getAssetType("Epic");
@@ -211,7 +212,7 @@ public class PortfolioItemExtract  extends JFrame {
 			towrite = (String) member.getAttribute(nameAttribute).getValue();
 			String tempstring = towrite;
 			if (towrite != null) {
-				tempstring = cleanString(towrite);
+				tempstring = cleaner.cleanString(towrite);
 			}
 			
 			//Planned Begin - beginDateAttribute
@@ -287,7 +288,7 @@ public class PortfolioItemExtract  extends JFrame {
 			towrite = (String) member.getAttribute(descriptionAttribute).getValue();
 			tempstring = "";
 			if (towrite != null) {
-				tempstring = cleanString(towrite);
+				tempstring = cleaner.cleanString(towrite);
 			}
 			cell.setCellValue(tempstring);	
 
